@@ -23,38 +23,32 @@ export default {
   props: ["username"],
   data() {
     return {
-      meetings: this.$http.get("meetings").then(response => {
-        this.meetings = response.body;
-      })
+      meetings: this.$http.get("meetings").then(response => {this.meetings = response.body;})
     };
   },
   methods: {
     addNewMeeting(meeting) {
-      this.$http.post("meetings", meeting).then(() => {
-        this.listMeetings();
-      });
+
+      this.$http.post("meetings", meeting).then(() => {this.listMeetings();});
     },
     addMeetingParticipant(meeting) {
-      var id = meeting.id;
-      this.$http.post(`meetings/${id}/participants/${this.username}`, meeting).then(() => {
+
+      this.$http.post(`meetings/${meeting.id}/participants/${this.username}`, meeting).then(() => {
         this.listMeetings();
       });
     },
     removeMeetingParticipant(meeting) {
-      var id = meeting.id;
-      this.$http.delete(`meetings/${id}/participants/${this.username}`, meeting).then(() => {
+
+      this.$http.delete(`meetings/${meeting.id}/participants/${this.username}`, meeting).then(() => {
         this.listMeetings();
       });
     },
     deleteMeeting(meeting) {
-      var id = meeting.id;
-      this.$http.delete(`meetings/${id}`, meeting).then(() => {
-        this.listMeetings();
-      });
+
+      this.$http.delete(`meetings/${meeting.id}`, meeting).then(() => {this.listMeetings();});
     },
     listMeetings() {
-      this.meetings = this.$http.get("meetings").then(response => {
-        this.meetings = response.body;
+      this.meetings = this.$http.get("meetings").then(response => {this.meetings = response.body;
       });
     }
   }
